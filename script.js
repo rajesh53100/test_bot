@@ -9,7 +9,6 @@
 
                 let url = window.location.href
                 // Sample URL with payload
-                //url = "https://app.yellowmessenger.com/pwa/live/x1545990126801?ym.triggerJourney=ckyc-direct"
                 //url = "https://app.yellowmessenger.com/pwa/live/x1545990126801?ym.triggerJourney=renewal-direct&ym.payload=OG-21-2401-1802-00010477_9459433707"
                 if (url.includes('pwa/live/x1612509851864')) {
                     console.log("Current URL", url);
