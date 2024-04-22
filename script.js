@@ -1,13 +1,14 @@
 (function () {
     console.log("inside custom script");
-    window.addEventListener("message", function (event1) {
-        try {
-            let event = JSON.parse(event1.data);
-            console.log("custom script event", event);
-            if (event.event_code == 'connected') {
-                console.log("Found Event", event);
+    // window.addEventListener("message", function (event1) {
+    //     try {
+    //         let event = JSON.parse(event1.data);
+    //         console.log("custom script event", event);
+    //         if (event.event_code == 'connected') {
+    //             console.log("Found Event", event);
 
-                let url = window.location.href
+                let url = window.location.href;
+                console.log("Current URL", url);
                 // Sample URL with payload
                 //url = "https://app.yellowmessenger.com/pwa/live/x1545990126801?ym.triggerJourney=renewal-direct&ym.payload=OG-21-2401-1802-00010477_9459433707"
                 if (url.includes('pwa/live/x1612509851864')) {
@@ -45,9 +46,9 @@
                         window.location = `https://app.yellowmessenger.com/pwa/v2/live/x1545629713127`
                     }
                 }
-            }
-        } catch (error) {
-            console.log(error, "Error occured");
-        }
-    }, false);
+            //}
+        // } catch (error) {
+        //     console.log(error, "Error occured");
+        // }
+    // }, false);
 })();
