@@ -3,7 +3,7 @@
     let url = window.location.href;
     console.log("Current URL", url);
     // Sample URL with payload
-    if (url.includes('pwa/live/x1545629713127') && url.includes('triggerJourney')) {
+    if ( (url.includes('pwa/live/x1545629713127') || url.includes('pwa/live/x1545990126801') || url.includes('pwa/live/x1545990145814')) && url.includes('triggerJourney')) {
         console.log("Current URL", url);
         if (url.includes('?')) {
             let paramString = url.split('?')[1]; 
@@ -54,10 +54,12 @@
                     }
                 }
             }
-            window.location = `https://app.yellowmessenger.com/pwa/v2/live/x1714103141477?${journey_param}&${payload_param}`
+            window.location = `https://cloud.yellow.ai/pwa/v2/live/x1714103142268?${journey_param}&${payload_param}`
         } else {
-            window.location = `https://app.yellowmessenger.com/pwa/v2/live/x1714103141477`
+            window.location = `https://cloud.yellow.ai/pwa/v2/live/x1714103142268`
         }
+    }else{
+        window.location = `https://cloud.yellow.ai/pwa/v2/live/x1714103142268`
     }
 
 })();
