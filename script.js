@@ -58,7 +58,7 @@
         } else {
             window.location = `https://cloud.yellow.ai/pwa/v2/live/x1714103142268`
         }
-    }else if(url.includes('pwa/live/x1545629713127') || url.includes('pwa/live/x1545990126801') || url.includes('pwa/live/x1545990145814'){
+    }else if(url.includes('pwa/live/x1545629713127') || url.includes('pwa/live/x1545990126801') || url.includes('pwa/live/x1545990145814') ){
         window.location = `https://cloud.yellow.ai/pwa/v2/live/x1714103142268`
     }
 
