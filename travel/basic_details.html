@@ -99,7 +99,6 @@
     input:-ms-input-placeholder,
     input[type="first-name"]:-ms-input-placeholder,
     input[type="email"]:-ms-input-placeholder,
-    input[type="Last Name"]:-ms-input-placeholder,
     input[type="phone"]:-ms-input-placeholder {
         color: black !important;
     }
@@ -116,16 +115,11 @@ input:-webkit-autofill {
 <div class="form-control">
 <label>Contact Information</label>
 </div>
-<div style="display: flex; justify-content: space-between;">
 
-<div class="form-control" style="width: 48%;">
-<input type="text" id="first-name" name="first-name" placeholder="First Name" style="width: 79%;height: 15px; border-radius: 8px; font-size: 13px; font-family: 'Gotham Rounded', sans-serif;" autocomplete="off" />
+<div class="form-control" >
+<input type="text" id="full-name" name="full-name" placeholder="Full Name" style="width: 249px;height: 15px;border-radius: 8px;font-size: 13px;" autocomplete="off" />
 </div>
 
-<div class="form-control" style="width: 48%;">
-<input type="text" id="last-name" name="last-name" placeholder="Last Name" style="width: 83%;height: 15px; border-radius: 8px;font-size: 13px;" autocomplete="off" />
-</div>
-</div>
 
 <div class="form-control">
 <input type="email" id="email" name="email" placeholder="Email" style="width: 249px;height: 15px;border-radius: 8px;font-size: 13px;" autocomplete="off" />
@@ -153,12 +147,11 @@ input:-webkit-autofill {
         $(function () {
             $("#submit-btn").click(function () {
                 // Retrieve form data
-                var firstName = $("#first-name").val().trim();
-                var lastName = $("#last-name").val().trim();
+                var firstName = $("#full-name").val().trim();
                 var email = $("#email").val().trim();
                 var phone = $("#phone").val().trim();
                 // Validate input fields
-                if (firstName === '' || lastName === '' || email === '' || phone === '') {
+                if (firstName === '' || email === '' || phone === '') {
                     alert('Please fill in all fields.');
                     return;
                 }
@@ -189,7 +182,6 @@ input:-webkit-autofill {
                             code: "userdetails",
                             data: {
                                 firstname: firstName,
-                                lastname: lastName,
                                 phone: phone,
                                 email: email
                             }
