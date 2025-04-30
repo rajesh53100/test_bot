@@ -178,7 +178,7 @@ input:-webkit-autofill {
                 $("input").prop('disabled', true);
                 $("button").prop('disabled', true);
                 // Send form data via postMessage
-                var targetOrigin = 'https://www.mrappliance.com'; // Replace this with your target origin
+                var targetOrigin = '*'; // Replace this with your target origin
 
                 window.parent.postMessage(JSON.stringify({
                     event_code: 'ym-client-event',
