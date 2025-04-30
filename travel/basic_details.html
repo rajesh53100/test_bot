@@ -180,6 +180,8 @@ input:-webkit-autofill {
                 // Send form data via postMessage
                 var targetOrigin = '*'; // Replace this with your target origin
 
+                console.log('Data Published Success..')
+
                 window.parent.postMessage(JSON.stringify({
                     event_code: 'ym-client-event',
                     data: JSON.stringify({
