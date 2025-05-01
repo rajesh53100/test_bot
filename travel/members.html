@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Member Details Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f6fa;
+      display: flex;
+      justify-content: center;
+      padding-top: 40px;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 20px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 350px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    select, input[type="text"], input[type="number"] {
+      padding: 4px;
+      font-size: 12px;
+      width: 90px;
+    }
+
+    .member-group {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .member-label {
+      width: 65px;
+      font-weight: bold;
+    }
+
+    #submit-btn {
+      width: 100%;
+      padding: 6px;
+      background-color: #3498db;
+      border: none;
+      color: white;
+      font-size: 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #submit-btn:hover {
+      background-color: #2980b9;
+    }
+
+    .submission-message {
+      display: none;
+      text-align: center;
+      color: green;
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Enter Member Details</h2>
+
+    <label for="member-count">How many members?</label>
+    <select id="member-count">
+      <option value="">Select</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+
+    <form id="member-form">
+      <div id="member-fields"></div>
+      <button type="button" id="submit-btn">Submit</button>
+    </form>
+
+    <div class="submission-message">Thanks! Data submitted.</div>
+  </div>
+
+  <script>
+    document.getElementById('member-count').addEventListener('change', function () {
+      const count = parseInt(this.value);
+      const container = document.getElementById('member-fields');
+      container.innerHTML = ''; // Clear previous
+
+      for (let i = 0; i < count; i++) {
+        const memberHTML = `
+          <div class="member-group">
+
+            <label>
+              Name<br>
+              <input type="text" name="name" required>
+            </label>
+            <label>
+              Age<br>
+              <input type="number" name="age" required>
+            </label>
+            <label>
+              Relation<br>
+              <input type="text" name="relation" required>
+            </label>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', memberHTML);
+      }
+    });
+
+    document.getElementById('submit-btn').addEventListener('click', function () {
+      const form = document.getElementById('member-form');
+      const groups = form.querySelectorAll('.member-group');
+      const members = [];
+
+      for (const group of groups) {
+        const name = group.querySelector('input[name="name"]').value.trim();
+        const age = group.querySelector('input[name="age"]').value.trim();
+        const relation = group.querySelector('input[name="relation"]').value.trim();
+
+        if (!name || !age || !relation) {
+          alert('Please fill all fields.');
+          return;
+        }
+
+        members.push({ name, age, relation });
+      }
+      console.log(members, "members")
+
+      window.parent.postMessage(JSON.stringify({
+        event_code: 'ym-client-event',
+        data: JSON.stringify({
+          event: {
+            code: "userdetails",
+            data: { members }
+          }
+        })
+      }), '*');
+
+      form.style.display = 'none';
+      document.querySelector('.submission-message').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
