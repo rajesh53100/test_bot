@@ -1,0 +1,174 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mr Appliance</title>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gotham-fonts@1.0.3/css/gotham-rounded.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<style>
+        /* Body styling */
+        body {
+            background: #fff;
+            font-family: 'Gotham Rounded', sans-serif; /* Apply Gotham Rounded font to all text */
+            text-align: left;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Form styling */
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 270px;
+            height: 200px;
+            margin: 1px;
+            padding: 16px 16px;
+            box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            align-self: flex-start;
+        }
+        /* Form control styling */
+        .form-control {
+            text-align: left;
+            margin-bottom: 10px;
+            color: black !important;
+        }
+        /* Label styling */
+        .form-control label {
+            display: block;
+            margin-bottom: 10px;
+            color: #0B2451; /* Set label color to #0B2451 */
+            font-weight: bold;
+            font-size: 15px;
+            line-height: 20px;
+        }
+        /* Input styling */
+        .form-control input,
+        .form-control select,
+        .form-control textarea {
+            border: 1px solid #000;
+            border-radius: 2px;
+            font-family: inherit;
+            padding: 10px;
+            display: block;
+            width: calc(100% - 20px);
+            background-color: rgba(255, 255, 255, 0.5);
+            color: black !important;
+            font-size: 13px;
+        }
+        /* Button styling */
+        #submit-btn {
+            background-color: #ce360b;
+            border: 0.0px solid #ce360b;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 14px;
+            display: block;
+            width: 40%;
+            margin-top:9px;
+            margin-bottom: 20px;
+            color: #fff;
+            padding: 08px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #142651;
+        }
+        /* Submission message styling */
+        .submission-message {
+            color: black;
+            text-align: center;
+            margin-top: 0px;
+        }
+
+    </style>
+</head>
+<body>
+
+<form id="form" autocomplete="off">
+<div class="form-control">
+    <label for="countries">Which country or countries will you be visiting?</label><br>
+    <select id="countries" name="countries" multiple="multiple" style="width: 270px;">
+      <option value="US">United States</option>
+      <option value="CA">Canada</option>
+      <option value="UK">United Kingdom</option>
+      <option value="AU">Australia</option>
+      <option value="IN">India</option>
+      <!-- Add more countries -->
+    </select>
+</div>
+
+<div style="display: flex; justify-content: flex-end;">
+<button type="button" id="submit-btn">Next</button>
+</div>
+
+<div class="submission-message" style="display: none;"></div>
+</form>
+<script>
+    $(document).ready(function() {
+      $('#countries').select2({
+        placeholder: "Select countries...",
+        allowClear: true
+      });
+    });
+  </script>
+
+<script>
+
+        $(function () {
+            $("#submit-btn").click(function () {
+                // Retrieve form data
+                console.log($(document))
+                var countries = $("#countries").val();
+ console.log(countries, 'countries')
+                // Validate input fields
+                if (countries === '') {
+                    alert('Please fill in all fields.');
+                    return;
+                }
+                // Validate email format
+               
+                // Disable form fields after submission
+                $("select").prop('disabled', true);
+                $("button").prop('disabled', true);
+                // Send form data via postMessage
+
+
+                console.log('Data Published Success..')
+
+                window.parent.postMessage(JSON.stringify({
+                    event_code: 'ym-client-event',
+                    data: JSON.stringify({
+                        event: {
+                            code: "userdetails",
+                            data: {
+                                countries: countries
+                            }
+                        }
+                    })
+                }), '*');
+                // Hide cancel button
+                $("#cancel-btn").fadeOut("slow");
+                // Fade out the form and append thank you message
+                $("#submit-btn").fadeOut("slow", function () {
+                    $(".submission-message").fadeIn("slow");
+                });
+            });
+
+            // Cancel button click event
+            $("#cancel-btn").click(function () {
+                $("#form").html("<div class='submission-message'>Going Back!</div>");
+            });
+        });
+    </script>
+</body>
+</html>
