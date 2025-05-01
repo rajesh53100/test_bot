@@ -56,8 +56,11 @@
 
   <script>
     // Parse members from URL query string
+    console.log(window.location.search, 'window.location.search')
     const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams, 'urlParams')
     const memberCount = parseInt(urlParams.get('members') || '0');
+    console.log(memberCount, 'memberCount')
 
     const container = document.getElementById('member-fields');
     for (let i = 0; i < memberCount; i++) {
