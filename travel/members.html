@@ -99,8 +99,14 @@
         })
       }), '*');
 
-      document.getElementById('member-form').style.display = 'none';
-      document.querySelector('.submission-message').style.display = 'block';
+      //document.getElementById('member-form').style.display = 'none';
+      //document.querySelector('.submission-message').style.display = 'block';
+      document.querySelectorAll("input").forEach(function(el) {
+        el.disabled = true;
+      });
+      document.querySelectorAll("button").forEach(function(el) {
+        el.disabled = true;
+      });
     });
   </script>
 </body>
