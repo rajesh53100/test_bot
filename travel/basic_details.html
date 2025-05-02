@@ -160,8 +160,10 @@ input:-webkit-autofill {
                 var firstName = $("#full-name").val().trim();
                 var email = $("#email").val().trim();
                 var phone = $("#phone").val().trim();
+                var passport = $("#passport-number").val().trim();
+                var dob = $("#dob").val().trim();
                 // Validate input fields
-                if (firstName === '' || email === '' || phone === '') {
+                if (firstName === '' || email === '' || phone === '' || dob === '') {
                     alert('Please fill in all fields.');
                     return;
                 }
@@ -193,7 +195,9 @@ input:-webkit-autofill {
                             data: {
                                 firstname: firstName,
                                 phone: phone,
-                                email: email
+                                email: email,
+                                passport: passport,
+                                dob: dob
                             }
                         }
                     })
