@@ -95,7 +95,7 @@
       for (const group of groups) {
         const name = group.querySelector('input[name="name"]').value.trim();
         const age = group.querySelector('input[name="age"]').value.trim();
-        const relation = group.querySelector('input[name="relation"]').value.trim();
+        const relation = group.querySelector('select[name="relation"]').value.trim();
         if (!name || !age || !relation) {
           alert("Please fill all fields.");
           return;
