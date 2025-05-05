@@ -115,7 +115,7 @@
           <input type="number" name="age" placeholder="Age" style="width: 40px;" min="1" max="100" required />
           <!--<input type="text" name="relation" placeholder="Relation" required/>-->
           </div>
-          <div class="member-group">
+          <div class="member-group2">
           <!--<label class="relation" style="margin-bottom:0px; margin-top:0px;">Relation</label>-->
           <select id="relation" name="relation" required style="height:20px; margin-left:0px">
             <option value="Select">Select Relation</option>
@@ -144,12 +144,25 @@
       for (const group of groups) {
         const name = group.querySelector('input[name="name"]').value.trim();
         const age = group.querySelector('input[name="age"]').value.trim();
-        const relation = group.querySelector('select[name="relation"]').value.trim();
-        if (!name || !age || !relation) {
+        if (!name || !age) {
           alert("Please fill all fields.");
           return;
         }
-        members.push({ name, age, relation });
+        members.push({ name, age });
+      }
+      const groups2 = document.querySelectorAll('.member-group2');
+      let count = 0
+      for (const group of groups2) {
+        const relation = group.querySelector('select[name="relation"]').value.trim();
+        if (!relation) {
+          alert("Please fill all fields.");
+          return;
+        }
+        let obj = members[count];
+        obj.relation = relation;
+        members[count] = obj;
+        count++;
+        console.log(members, "members");
       }
 
       // Post data to parent
