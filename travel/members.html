@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background:  #dfe3e7;
+      background:  #fff;
       display: flex;
     }
     .form-container {
@@ -46,7 +46,7 @@
 </head>
 <body>
   <div class="form-container">
-    <h3>Member Details</h3>
+    <h3 style="margin-bottom:10px">Member Details</h3>
     <form id="member-form">
       <div id="member-fields"></div>
       <button type="button" id="submit-btn">Submit</button>
@@ -66,9 +66,24 @@
     for (let i = 0; i < memberCount; i++) {
       const memberHTML = `
         <div class="member-group">
-          <input type="text" name="name" placeholder="Name" required>
-          <input type="number" name="age" placeholder="Age" required>
-          <input type="text" name="relation" placeholder="Relation" required>
+          <input type="text" name="name" placeholder="Name" required/>
+          <input type="number" name="age" placeholder="Age" style="width: 36px;" min="1" max="100" required />
+          <!--<input type="text" name="relation" placeholder="Relation" required/>-->
+          <select id="relation" name="relation" required>
+            <option value="Select">Select</option>
+            <option value="Spouse">Spouse</option>
+            <option value="Son">Son</option>
+            <option value="Daughter">Daughter</option>
+            <option value="Brother">Brother</option>
+            <option value="Sister">Sister</option>
+            <option value="Father">Father</option>
+            <option value="Mother">Mother</option>
+            <option value="Grand_Father">Grand Father</option>
+            <option value="Grand_Mother">Grand Mother</option>
+            <option value="Father_In_Law">Father In Law</option>
+            <option value="Mother_In_Law">Mother In Law</option>
+            <option value="Others">Others</option>
+          </select>
         </div>
       `;
       container.insertAdjacentHTML('beforeend', memberHTML);
