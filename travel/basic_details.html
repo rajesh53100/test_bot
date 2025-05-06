@@ -135,7 +135,7 @@ input:-webkit-autofill {
   </div>
 
   <div class="form-control">
-    <input type="date" id="dob" name="dob" placeholder="Date of Birth" style="width: 230px; height: 20px; border-radius: 8px; font-size: 13px; "autocomplete="off" />
+    <input type="text" id="dob" name="dob" placeholder="Date of Birth" style="width: 230px; height: 20px; border-radius: 8px; font-size: 13px; "autocomplete="off"  onfocus="(this.type='date')" onblur="(this.type='text')"/>
   </div>
 
 <div style="display: flex;">
