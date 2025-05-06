@@ -6,6 +6,11 @@
 <title>Mr Appliance</title>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gotham-fonts@1.0.3/css/gotham-rounded.min.css">
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <style>
         /* Body styling */
         body {
@@ -134,9 +139,7 @@ input:-webkit-autofill {
   </div>
 
   <div class="form-control">
-    <input type="date" id="dob" name="dob"
-      style="width: 230px; height: 20px; border-radius: 8px; font-size: 13px;" placeholder="Date of Birth"
-      autocomplete="off" />
+    <input type="text" id="dob" name="dob" placeholder="Date of Birth" style="width: 230px; height: 20px; border-radius: 8px; font-size: 13px;" autocomplete="off" />
   </div>
 
 <div style="display: flex;">
@@ -148,6 +151,11 @@ input:-webkit-autofill {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+        
+flatpickr("#dob", {
+        dateFormat: "d/m/Y",  // Shows date as DD/MM/YYYY
+        maxDate: "today"
+});
     window.onload = function() {
     var inputFields = document.querySelectorAll('input');
     inputFields.forEach(function(input) {
