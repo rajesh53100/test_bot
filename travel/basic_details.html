@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mr Appliance</title>
+<title>Proposer Basic Details</title>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gotham-fonts@1.0.3/css/gotham-rounded.min.css">
 
@@ -34,7 +34,7 @@
         form {
             background-color: rgba(255, 255, 255, 0.8);
             width: 230px;
-            height: 250px;
+            height: 270px; /* Increased height to accommodate new elements */
             margin: 1px;
             padding: 16px 16px;
             /*box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);*/
@@ -46,6 +46,7 @@
             text-align: left;
             margin-bottom: 15px;
             color: black !important;
+            position: relative;
         }
         /* Label styling */
         .form-control label {
@@ -95,19 +96,26 @@
             text-align: center;
             margin-top: 0px;
         }
-      /* Autofill text color for all input fields in Edge */
-@supports (-ms-ime-align:auto) {
-    input:-ms-input-placeholder,
-    input[type="first-name"]:-ms-input-placeholder,
-    input[type="email"]:-ms-input-placeholder,
-    input[type="phone"]:-ms-input-placeholder {
-        color: black !important;
-    }
-}
-input:-webkit-autofill {
-    -webkit-text-fill-color: black !important;
-}
-
+        /* Error message styling */
+        .error-message {
+            color: red;
+            font-size: 10px;
+            margin-top: 5px;
+            display: none;
+			font-weight: normal;
+        }
+        /* Autofill text color for all input fields in Edge */
+        @supports (-ms-ime-align:auto) {
+            input:-ms-input-placeholder,
+            input[type="first-name"]:-ms-input-placeholder,
+            input[type="email"]:-ms-input-placeholder,
+            input[type="phone"]:-ms-input-placeholder {
+                color: black !important;
+            }
+        }
+        input:-webkit-autofill {
+            -webkit-text-fill-color: black !important;
+        }
     </style>
 </head>
 <body>
@@ -117,26 +125,37 @@ input:-webkit-autofill {
 <label>Contact Information</label>
 </div>
 
-<div class="form-control" >
-<input type="text" id="full-name" name="full-name" placeholder="Full Name" style="width: 230px;height: 15px;border-radius: 8px;font-size: 13px;" autocomplete="off" />
-</div>
+<div style="display: flex; gap: 10px;">
+    <div class="form-control" style="flex: 1; min-width: 80px; max-width: 80px;">
+        <select id="title" name="title" 
+    style="width: 100%; height: 22px; border-radius: 8px; font-size: 13px; padding: 0 4px; line-height: 15px;">
+            <!--<option value="">Title</option>-->
+            <option value="MR">MR</option>
+            <option value="MRS">MRS</option>
+			<option value="MISS">MISS</option>
+        </select>
+    </div>
 
+    <div class="form-control" style="flex: 2;">
+        <input type="text" id="full-name" name="full-name" placeholder="Full Name" style="width: 100%; height: 15px; border-radius: 8px; font-size: 13px;" autocomplete="off" />
+        <div id="name-error" class="error-message">Please enter your full name</div>
+    </div>
+</div>
 
 <div class="form-control">
 <input type="email" id="email" name="email" placeholder="Email" style="width: 230px;height: 15px;border-radius: 8px;font-size: 13px;" autocomplete="off" />
+<div id="email-error" class="error-message">Please enter a valid email address</div>
 </div>
 
 <div class="form-control">
-<input type="tel" id="phone" name="phone" placeholder="Phone Number" style="width: 230px; height: 15px; border-radius: 8px; font-size: 13px;" autocomplete="off" />
+<input type="tel" id="phone"  maxlength="10" name="phone" placeholder="Phone Number" style="width: 230px; height: 15px; border-radius: 8px; font-size: 13px;" autocomplete="off" />
+<div id="phone-error" class="error-message">Please enter a valid phone number</div>
 </div>
 
 <div class="form-control">
-    <input type="text" id="passport-number" name="passport-number" placeholder="Passport Number (optional)" style="width: 230px; height: 15px; border-radius: 8px; font-size: 13px;" autocomplete="off" />
-  </div>
-
-  <div class="form-control">
-    <input type="text" id="dob" name="dob" placeholder="Date of Birth" style="width: 230px; height: 20px; border-radius: 8px; font-size: 13px; "autocomplete="off"  onfocus="(this.type='date')" onblur="(this.type='text')"/>
-  </div>
+<input type="text" id="dob" name="dob" placeholder="Date of Birth" style="width: 230px; height: 20px; border-radius: 8px; font-size: 13px; "autocomplete="off"  onfocus="(this.type='date')" onblur="if(this.value===''){this.type='text'}"/>
+<div id="dob-error" class="error-message">You must be at least 18 years old</div>
+</div>
 
 <div style="display: flex;">
 <button type="button" id="submit-btn">Next</button>
@@ -149,72 +168,217 @@ input:-webkit-autofill {
 <script>
         
     window.onload = function() {
-    var inputFields = document.querySelectorAll('input');
-    inputFields.forEach(function(input) {
-      input.setAttribute('autocomplete', 'off');
-    });
-  };
-        $(function () {
-            $("#submit-btn").click(function () {
-                // Retrieve form data
-                var firstName = $("#full-name").val().trim();
-                var email = $("#email").val().trim();
-                var phone = $("#phone").val().trim();
-                var passport = $("#passport-number").val().trim();
-                var dob = $("#dob").val().trim();
-                // Validate input fields
-                if (firstName === '' || email === '' || phone === '' || dob === '') {
-                    alert('Please fill in all fields.');
-                    return;
-                }
-                // Validate email format
-                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailPattern.test(email)) {
-                    alert('Please enter a valid email address.');
-                    return;
-                }
-                // Validate phone number format (simple validation)
-                var phonePattern = /^(?!0{10})(?:\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/;
-                if (!phonePattern.test(phone)) {
-                    alert('Please enter a valid phone number.');
-                    return;
-                }
-                // Disable form fields after submission
-                $("input").prop('disabled', true);
-                $("button").prop('disabled', true);
-                // Send form data via postMessage
-                var targetOrigin = '*'; // Replace this with your target origin
+        var inputFields = document.querySelectorAll('input');
+        inputFields.forEach(function(input) {
+            input.setAttribute('autocomplete', 'off');
+        });
+    };
+    
+    // Function to validate full name
+    function validateFullName(name) {
+        // Check if name contains at least two words (first and last name)
+        var nameParts = name.trim().split(/\s+/);
+        return nameParts.length >= 2;
+    }
+    
+    // Function to validate email
+    function validateEmail(email) {
+        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailPattern.test(email);
+    }
+    
+    // Function to validate phone number
+    function validatePhone(phone) {
+        // Should start with 5, 6, 7, 8, or 9 and be exactly 10 digits
+        var phonePattern = /^[5-9]\d{9}$/;
+        return phonePattern.test(phone);
+    }
+    
+    // Function to validate age (18 years or older)
+    function validateAge(dobString) {
+        var dob = new Date(dobString);
+        var today = new Date();
+        
+        var age = today.getFullYear() - dob.getFullYear();
+        var monthDiff = today.getMonth() - dob.getMonth();
+        
+        // If birthday hasn't occurred this year yet, subtract one year
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
+        
+        return age >= 18;
+    }
 
-                console.log('Data Published Success..')
+    $(function () {
+        // Add blur event to validate name field when user leaves the field
+        $("#full-name").blur(function() {
+            var fullName = $(this).val().trim();
+            if (fullName !== '' && !validateFullName(fullName)) {
+                $("#name-error").show();
+            } else {
+                $("#name-error").hide();
+            }
+        });
+        
+        // Add blur event to validate email field
+        $("#email").blur(function() {
+            var email = $(this).val().trim();
+            if (email !== '' && !validateEmail(email)) {
+                $("#email-error").show();
+            } else {
+                $("#email-error").hide();
+            }
+        });
+        
+        // Add blur event to validate phone field
+        $("#phone").blur(function() {
+            var phone = $(this).val().trim();
+            if (phone !== '' && !validatePhone(phone)) {
+                $("#phone-error").show();
+            } else {
+                $("#phone-error").hide();
+            }
+        });
+        
+        // Add change event to validate date of birth
+        $("#dob").change(function() {
+            var dob = $(this).val();
+            if (dob !== '' && !validateAge(dob)) {
+                $("#dob-error").show();
+            } else {
+                $("#dob-error").hide();
+            }
+        });
 
-                window.parent.postMessage(JSON.stringify({
-                    event_code: 'ym-client-event',
-                    data: JSON.stringify({
-                        event: {
-                            code: "userdetails",
-                            data: {
-                                firstname: firstName,
-                                phone: phone,
-                                email: email,
-                                passport: passport,
-                                dob: dob
-                            }
+        $("#submit-btn").click(function () {
+            // Retrieve form data
+            var title = $("#title").val().trim();
+            var fullName = $("#full-name").val().trim();
+			var lastName = "";
+            var email = $("#email").val().trim();
+            var phone = $("#phone").val().trim();
+            var dob = $("#dob").val().trim();
+
+            // Validate title
+            if (title === '') {
+                alert('Please select a title.');
+                return;
+            }
+
+            // Validate full name
+            if (fullName === '') {
+            
+                $("#name-error").show();
+                return;
+            } else if (!validateFullName(fullName)) {
+                $("#name-error").show();
+                return;
+            }else {
+				$("#name-error").hide();
+               
+			}
+
+            // Validate other input fields
+            //if (email === '' || phone === '' || dob === '') {
+             //   alert('Please fill in all fields.');
+              //  return;
+            //}
+
+            // Validate email format
+			if(email === ''){
+			
+				$("#email-error").show();
+                return;
+			}
+            else if (!validateEmail(email)) {
+                $("#email-error").show();
+                return;
+            }else{
+				$("#email-error").hide();
+                
+			}
+
+            // Validate phone number format
+			if(phone === ''){
+				$("#phone-error").show();
+                return;
+			}
+            else if (!validatePhone(phone)) {
+                $("#phone-error").show();
+                return;
+            }
+			else{
+				$("#phone-error").hide();
+               
+			}
+            
+            // Validate age (18+)
+			if(dob === ''){
+				$("#dob-error").show();
+                return;
+			}
+            else if (!validateAge(dob)) {
+                $("#dob-error").show();
+                return;
+            }
+			else{
+				$("#dob-error").hide();
+           
+			}
+
+            // Disable form fields after submission
+            $("input").prop('disabled', true);
+            $("select").prop('disabled', true);
+            $("button").prop('disabled', true);
+
+            // Send form data via postMessage
+            var targetOrigin = '*'; // Replace this with your target origin
+
+            console.log('Data Published Success..')
+			var nameParts = fullName.trim().split(/\s+/);
+			fullName=nameParts[0];
+			for(var i=0;i<nameParts.length;i++){
+				if(i!=0){
+					lastName+=nameParts[i];
+					if(i<nameParts.length-1){
+						lastName+= " "; 
+					}
+				}
+			}
+			
+            window.parent.postMessage(JSON.stringify({
+                event_code: 'ym-client-event',
+                data: JSON.stringify({
+                    event: {
+                        code: "userdetails",
+                        data: {
+                            title: title,
+                            firstname: fullName,
+			    lastname: lastName,
+                            phone: phone,
+                            email: email,
+                            passport: "",
+                            dob: dob
                         }
-                    })
-                }), '*');
-                // Hide cancel button
-                $("#cancel-btn").fadeOut("slow");
-                // Fade out the form and append thank you message
-                $("#submit-btn").fadeOut("slow", function () {
-                    $(".submission-message").fadeIn("slow");
-                });
-            });
+                    }
+                })
+            }), '*');
 
-            // Cancel button click event
-            $("#cancel-btn").click(function () {
-                $("#form").html("<div class='submission-message'>Going Back!</div>");
+            // Hide cancel button
+            $("#cancel-btn").fadeOut("slow");
+            
+            // Fade out the form and append thank you message
+            $("#submit-btn").fadeOut("slow", function () {
+                $(".submission-message").fadeIn("slow");
             });
         });
-    </script>
+
+        // Cancel button click event
+        $("#cancel-btn").click(function () {
+            $("#form").html("<div class='submission-message'>Going Back!</div>");
+        });
+    });
+</script>
 </body>
 </html>
