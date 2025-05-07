@@ -5,157 +5,208 @@
   <title>Travel Member Form</title>
   <style>
     body {
-      background:  #dfe3e7;
+      background: #dfe3e7;
       display: flex;
-      margin:0px !important;
+      margin: 0px !important;
       font-family: 'Gotham Rounded', sans-serif;
     }
     .form-container {
       border-radius: 16px;
       background: #fff;
-      max-width: 230px;
+      max-width: 250px;
       width: 100%;
       margin: 1px;
       padding: 16px 16px;
     }
-    .member-child{
-        border: 1px solid;
-        border-color: #d6d6d6;
+    .member-child {
+        border: 1px solid #d6d6d6;
         margin-bottom: 5px;
         padding: 5px;
-        border-radius:5px;
+        border-radius: 5px;
     }
     .member-group {
       display: flex;
-      gap: 8px;
+      flex-direction: column;
       margin-bottom: 12px;
       font-size: 12px;
     }
-    .member-group input,
-    .member-group select    {
-      width: 143px;
-      height:15px;
-      border: 1px solid #000;
-    border-radius: 8px;
-    font-family: inherit;
-    padding-left: 10px;
-    display: block;
-    background-color: rgba(255, 255, 255, 0.5);
-    color: black !important;
-    font-size: 13px;
+    .input-row {
+      display: flex;
+      gap: 8px;
     }
-    button {
-            background-color: #3498db;
-            border: 0.0px solid #3498db;
-            border-radius: 4px;
-            font-family: inherit;
-            font-size: 14px;
-            display: block;
-            width: 40%;
-            margin-top:0px;
-            margin-bottom: 0px;
-            color: #fff;
-            padding: 08px 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #142651;
-        }
-    .submission-message {
+    .member-group input,
+    .member-group select {
+      width: 143px;
+      height: 15px;
+      border: 1px solid #000;
+      border-radius: 8px;
+      font-family: inherit;
+      padding-left: 10px;
+      display: block;
+      background-color: rgba(255, 255, 255, 0.5);
+      color: black !important;
+      font-size: 13px;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: 2px;
       display: none;
-      text-align: center;
-      font-weight: bold;
-      color: green;
-      margin-top: 10px;
     }
     .title {
-            display: block;
-            margin-bottom: 12px;
-            color: #0B2451; /* Set label color to #0B2451 */
-            font-weight: bold;
-            font-size: 17px;
-            line-height: 22px;
-        }
-    .relation{
-        display: block;
-        margin-bottom: 0px;
-        color: #0B2451; /* Set label color to #0B2451 */
-        font-weight: bold;
-        font-size: 12px;
-        line-height: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: block;
+    }
+    button {
+      padding: 5px 10px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .submission-message {
+      margin-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <div class="form-container">
-    <label class="title" style="margin-bottom:10px; margin-top:0px;">Member Details</label>
+    <label class="title">Member Details</label>
     <form id="member-form">
       <div id="member-fields"></div>
-      <button type="button" id="submit-btn">Submit</button>
+      <button type="submit">Submit</button>
     </form>
-    <div class="submission-message">Thanks! Submitted.</div>
+    <div class="submission-message" style="display: none; color: green;">Thanks! Submitted.</div>
   </div>
 
   <script>
-    // Parse members from URL query string
-    console.log(window.location.search, 'window.location.search')
+   console.log(window.location.search, 'window.location.search')
     const urlParams = new URLSearchParams(window.location.search);
     console.log(urlParams, 'urlParams')
     const memberCount = parseInt(urlParams.get('count') || '0');
-    console.log(memberCount, 'memberCount')
-
     const container = document.getElementById('member-fields');
+
     for (let i = 0; i < memberCount; i++) {
       const memberHTML = `
-      
         <div class="member-child">
-        <div class="member-group">
-          <input type="text" name="name" placeholder="Name" required/>
-          <input type="number" name="age" placeholder="Age" style="width: 40px;" min="1" max="100" required />
-          <!--<input type="text" name="relation" placeholder="Relation" required/>-->
+
+          <div class="member-group" style="flex: 2;">
+            <div class="input-row">
+              <select name="title" style="height: 19px;">
+                <option value="Mr">Mr</option>
+                <option value="Mrs">Mrs</option>
+                <option value="Miss">Miss</option>
+              </select>
+              <input type="text" name="name" placeholder="Full Name" />
+            </div>
+            <div class="error-message">Please enter your full name</div>
           </div>
-          <div class="member-group2">
-          <!--<label class="relation" style="margin-bottom:0px; margin-top:0px;">Relation</label>-->
-          <select id="relation" name="relation" required style="height:20px; margin-left:0px">
-            <option value="Select">Select Relation</option>
-            <option value="Spouse">Spouse</option>
-            <option value="Son">Son</option>
-            <option value="Daughter">Daughter</option>
-          </select>
-        </div>
+          <div class="member-group" style="flex: 2;">
+            <div class="input-row">
+              <input type="date" name="dob" style="height: 19px;"/>
+            </div>
+            <div class="error-message">Please enter your date of birth</div>
+          </div>
+          <div class="member-group" style="flex: 2;">
+            <div class="input-row">
+              <select name="relation" style="height: 19px;">
+                <option value="">Select Relation</option>
+                <option value="Spouse">Spouse</option>
+                <option value="Son">Son</option>
+                <option value="Daughter">Daughter</option>
+              </select>
+            </div>
+            <div class="error-message">Please select relation</div>
+          </div>
         </div>
       `;
       container.insertAdjacentHTML('beforeend', memberHTML);
     }
 
-    document.getElementById('submit-btn').addEventListener('click', function () {
-      const members = [];
-      const groups = document.querySelectorAll('.member-group');
-      for (const group of groups) {
-        const name = group.querySelector('input[name="name"]').value.trim();
-        const age = group.querySelector('input[name="age"]').value.trim();
-        if (!name || !age) {
-          alert("Please fill all fields.");
-          return;
-        }
-        members.push({ name, age });
-      }
-      const groups2 = document.querySelectorAll('.member-group2');
-      let count = 0
-      for (const group of groups2) {
-        const relation = group.querySelector('select[name="relation"]').value.trim();
-        if (!relation) {
-          alert("Please fill all fields.");
-          return;
-        }
-        let obj = members[count];
-        obj.relation = relation;
-        members[count] = obj;
-        count++;
-        console.log(members, "members");
-      }
+    document.getElementById('member-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Stop default browser validation
+      const memberElements = document.querySelectorAll('.member-child');
+      let valid = true;
+ const members = [];
+   let count = 0
+      memberElements.forEach(member => {
+        const title = member.querySelector('select[name="title"]');
+        const nameVal = member.querySelector('input[name="name"]');		
+        const dob = member.querySelector('input[name="dob"]');
+        const relationVal = member.querySelector('select[name="relation"]');
 
+        // Get error messages
+        const titleError = title.closest('.member-group').querySelector('.error-message');
+		const nameError = nameVal.closest('.member-group').querySelector('.error-message');
+        const dobError = dob.closest('.member-group').querySelector('.error-message');
+        const relationError = relationVal.closest('.member-group').querySelector('.error-message');
+
+
+
+		 // Validate name
+        if ( nameVal.value.trim() === "") {
+          nameError.style.display = "block";
+          valid = false;
+        } else if (!validateFullName(nameVal)) {
+          nameError.style.display = "block";
+          valid = false;
+            }else {
+          nameError.style.display = "none";
+        }
+
+        // Validate date of birth
+        if (dob.value.trim() === "") {
+          dobError.style.display = "block";
+          valid = false;
+        } else {
+          dobError.style.display = "none";
+        }
+
+        // Validate relation
+        if (relationVal.value.trim() === "") {
+          relationError.style.display = "block";
+          valid = false;
+        } else {
+          relationError.style.display = "none";
+        }
+		let firstName=nameVal.value;
+		let lastName='';
+		var nameParts = firstName.trim().split(/\s+/);
+
+			firstName=nameParts[0];
+
+			for(var i=0;i<nameParts.length;i++){
+
+				if(i!=0){
+
+					lastName+=nameParts[i];
+
+					if(i<nameParts.length-1){
+
+						lastName+= " "; 
+
+					}
+
+				}
+
+			}
+ 
+		let age=dob.value;
+		let relation=relationVal.value;
+		
+		 members.push({ firstName, lastName, age, relation });
+		  console.log(members, "members");
+      });
+
+     // if (valid) {
+      //  document.querySelector('.submission-message').style.display = 'block';
+     // }
+	 
+	 
       // Post data to parent
       window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event',
@@ -176,6 +227,14 @@
         el.disabled = true;
       });
     });
+	
+	function validateFullName(name) {
+        // Check if name contains at least two words (first and last name)
+        var nameParts = name.value.trim().split(/\s+/);
+        return nameParts.length >= 2;
+    }
+
+
   </script>
 </body>
 </html>
