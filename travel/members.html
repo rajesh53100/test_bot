@@ -107,7 +107,7 @@
           </div>
           <div class="member-group" style="flex: 2;">
             <div class="input-row">
-              <input type="date" name="dob" style="height: 19px;"/>
+              <input type="text" name="dob" style="height: 19px;" placeholder="Date of Birth"onfocus="(this.type='date')" onblur="if(this.value===''){this.type='text'}"/>
             </div>
             <div class="error-message">Please enter your date of birth</div>
           </div>
@@ -135,19 +135,19 @@
    let count = 0
       memberElements.forEach(member => {
         const title = member.querySelector('select[name="title"]');
-        const nameVal = member.querySelector('input[name="name"]');		
+        const nameVal = member.querySelector('input[name="name"]');     
         const dob = member.querySelector('input[name="dob"]');
         const relationVal = member.querySelector('select[name="relation"]');
 
         // Get error messages
         const titleError = title.closest('.member-group').querySelector('.error-message');
-		const nameError = nameVal.closest('.member-group').querySelector('.error-message');
+        const nameError = nameVal.closest('.member-group').querySelector('.error-message');
         const dobError = dob.closest('.member-group').querySelector('.error-message');
         const relationError = relationVal.closest('.member-group').querySelector('.error-message');
 
 
 
-		 // Validate name
+         // Validate name
         if ( nameVal.value.trim() === "") {
           nameError.style.display = "block";
           valid = false;
@@ -173,40 +173,41 @@
         } else {
           relationError.style.display = "none";
         }
-		let firstName=nameVal.value;
-		let lastName='';
-		var nameParts = firstName.trim().split(/\s+/);
+        let firstName=nameVal.value;
+        let lastName='';
+        var nameParts = firstName.trim().split(/\s+/);
 
-			firstName=nameParts[0];
+            firstName=nameParts[0];
 
-			for(var i=0;i<nameParts.length;i++){
+            for(var i=0;i<nameParts.length;i++){
 
-				if(i!=0){
+                if(i!=0){
 
-					lastName+=nameParts[i];
+                    lastName+=nameParts[i];
 
-					if(i<nameParts.length-1){
+                    if(i<nameParts.length-1){
 
-						lastName+= " "; 
+                        lastName+= " "; 
 
-					}
+                    }
 
-				}
+                }
 
-			}
+            }
  
-		let age=dob.value;
-		let relation=relationVal.value;
-		
-		 members.push({ firstName, lastName, age, relation });
-		  console.log(members, "members");
+        let age=dob.value;
+        let relation=relationVal.value;
+        
+         members.push({ firstName, lastName, age, relation });
+          console.log(members, "members");
       });
 
-     // if (valid) {
-      //  document.querySelector('.submission-message').style.display = 'block';
-     // }
-	 
-	 
+      //if (valid) {
+        //document.querySelector('.submission-message').style.display = 'block';
+      //}
+      if(valid == false) return;
+     
+     
       // Post data to parent
       window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event',
@@ -227,8 +228,8 @@
         el.disabled = true;
       });
     });
-	
-	function validateFullName(name) {
+    
+    function validateFullName(name) {
         // Check if name contains at least two words (first and last name)
         var nameParts = name.value.trim().split(/\s+/);
         return nameParts.length >= 2;
